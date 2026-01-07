@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ChevronRight, ExternalLink, Play, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, CheckCircle2 } from 'lucide-react';
 
 interface Feature {
   icon: React.ReactNode;
@@ -23,7 +23,7 @@ export const ComparisonCard: React.FC<ComparisonCardProps> = ({
   brand, model, subModel, color, features, actionText, onAction, highlight 
 }) => {
   return (
-    <div className={`flex flex-col bg-white rounded-[2.5rem] p-10 border-2 transition-all duration-500 shadow-xl hover:shadow-2xl hover:-translate-y-1 ${highlight ? 'border-indigo-600 ring-8 ring-indigo-50' : 'border-gray-100'}`}>
+    <div className={`flex flex-col bg-white rounded-[3rem] p-10 border-2 transition-all duration-500 shadow-xl hover:shadow-2xl hover:-translate-y-2 ${highlight ? 'border-indigo-600 ring-8 ring-indigo-50' : 'border-gray-100'}`}>
       <div className="mb-10">
         <span className={`text-[10px] font-black tracking-[0.25em] uppercase px-4 py-1.5 rounded-full ${highlight ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-200' : 'bg-gray-100 text-gray-500'}`}>
           {brand}
@@ -35,7 +35,7 @@ export const ComparisonCard: React.FC<ComparisonCardProps> = ({
       <div className="space-y-10 flex-grow">
         {features.map((f, idx) => (
           <div key={idx} className="flex gap-5 items-start group">
-            <div className={`p-4 rounded-2xl transition-colors duration-300 ${highlight ? 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100' : 'bg-gray-50 text-gray-400 group-hover:bg-gray-100'} shrink-0 shadow-sm`}>
+            <div className={`p-4 rounded-2xl transition-all duration-300 ${highlight ? 'bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100' : 'bg-gray-50 text-gray-400 group-hover:bg-gray-100'} shrink-0 shadow-sm`}>
               {f.icon}
             </div>
             <div>
@@ -49,17 +49,17 @@ export const ComparisonCard: React.FC<ComparisonCardProps> = ({
       {actionText && onAction ? (
         <button 
           onClick={onAction}
-          className="mt-12 flex items-center justify-center w-full py-5 bg-indigo-600 text-white rounded-[1.75rem] font-black gap-3 hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 transform active:scale-[0.98]"
+          className="mt-12 flex items-center justify-center w-full py-5 bg-indigo-600 text-white rounded-[2rem] font-black gap-3 hover:bg-indigo-700 transition-all shadow-xl shadow-indigo-100 transform active:scale-[0.98] border-b-4 border-indigo-800"
         >
           <ExternalLink size={20} className="text-indigo-200" />
           {actionText}
         </button>
       ) : (
-        <div className="mt-12 p-6 bg-gray-50 rounded-[1.75rem] border border-gray-100/50">
-          <p className="text-[10px] text-gray-400 font-black uppercase text-center mb-2 tracking-widest">Core Philosophy</p>
+        <div className="mt-12 p-6 bg-gray-50 rounded-[2rem] border border-gray-100/50">
+          <p className="text-[10px] text-gray-400 font-black uppercase text-center mb-2 tracking-widest">Tech Orientation</p>
           <div className="flex items-center justify-center gap-2 text-gray-500 text-xs font-bold">
              <CheckCircle2 size={14} className="text-gray-300" />
-             전통적 가열 도구 지향
+             기존 가열 방식의 완성도 추구
           </div>
         </div>
       )}
