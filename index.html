@@ -3,69 +3,59 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2026 AI Induction Comparison</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@100..900&display=swap');
       
       body {
-        font-family: 'Pretendard', sans-serif;
+        font-family: 'Pretendard', -apple-system, system-ui, sans-serif;
         -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+        word-break: keep-all;
+        background-color: #f8fafc;
       }
 
-      @keyframes spin-slow {
-        from { transform: rotate(0deg); }
-        to { transform: rotate(360deg); }
-      }
-      .animate-spin-slow {
-        animation: spin-slow 8s linear infinite;
-      }
+      /* 모바일 터치 최적화 */
+      button, a { touch-action: manipulation; cursor: pointer; }
 
-      /* Markdown Table Styles */
+      /* 마크다운 테이블 모바일 대응 */
       .prose table {
+        display: block;
         width: 100%;
-        border-collapse: separate;
-        border-spacing: 0;
-        margin: 2rem 0;
-        border: 1px solid #f3f4f6;
+        overflow-x: auto;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
         border-radius: 1rem;
-        overflow: hidden;
+        border: 1px solid #e2e8f0;
       }
       .prose th {
-        background-color: #f9fafb;
-        color: #111827;
+        background-color: #f1f5f9;
+        color: #0f172a;
         font-weight: 800;
+        padding: 0.75rem 1rem;
         text-align: left;
-        padding: 1rem;
-        border-bottom: 2px solid #e5e7eb;
+        white-space: nowrap;
       }
       .prose td {
-        padding: 1rem;
-        border-bottom: 1px solid #f3f4f6;
-        color: #4b5563;
-        font-size: 0.95rem;
-      }
-      .prose tr:last-child td {
-        border-bottom: none;
-      }
-      .prose tr:hover td {
-        background-color: #fcfdfe;
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.875rem;
       }
 
-      .prose h1 { font-size: 2rem; font-weight: 900; margin-top: 2rem; margin-bottom: 1.5rem; color: #111827; letter-spacing: -0.05em; }
-      .prose h2 { font-size: 1.5rem; font-weight: 800; margin-top: 1.75rem; margin-bottom: 1rem; color: #1f2937; border-left: 4px solid #4f46e5; padding-left: 1rem; }
-      .prose h3 { font-size: 1.25rem; font-weight: 700; margin-top: 1.5rem; color: #374151; }
-      .prose ul { list-style-type: none; padding-left: 0; margin-bottom: 1.5rem; }
-      .prose li { position: relative; padding-left: 1.5rem; margin-bottom: 0.75rem; line-height: 1.6; }
-      .prose li::before { content: '•'; position: absolute; left: 0; color: #4f46e5; font-weight: bold; }
-      .prose strong { color: #111827; font-weight: 800; background: linear-gradient(to top, #e0e7ff 40%, transparent 40%); }
+      /* 가독성 강화 */
+      .prose h2 { font-size: 1.25rem; font-weight: 800; color: #1e293b; border-left: 4px solid #4f46e5; padding-left: 0.75rem; margin-top: 2rem; }
+      .prose strong { color: #4f46e5; font-weight: 800; }
+      
+      @keyframes spin-slow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+      .animate-spin-slow { animation: spin-slow 10s linear infinite; }
     </style>
     <script type="importmap">
 {
   "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0/client",
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom": "https://esm.sh/react-dom@18.2.0/client",
     "@google/genai": "https://esm.sh/@google/genai",
     "lucide-react": "https://esm.sh/lucide-react",
     "react-markdown": "https://esm.sh/react-markdown",
@@ -76,7 +66,7 @@
 }
 </script>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body>
     <div id="root"></div>
     <script type="module" src="index.tsx"></script>
 </body>
