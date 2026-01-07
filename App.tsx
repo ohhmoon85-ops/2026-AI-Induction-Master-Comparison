@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { GoogleGenAI } from "@google/genai";
 import ReactMarkdown from 'react-markdown';
@@ -33,7 +32,6 @@ const App: React.FC = () => {
     setError(null);
     setLoading(true);
     try {
-      // Create a fresh instance for each call to ensure latest API_KEY is used
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
@@ -53,7 +51,7 @@ const App: React.FC = () => {
       }
     } catch (e: any) {
       console.error("Gemini API Error:", e);
-      setError("데이터를 불러오지 못했습니다. 우측 상단 Refresh 버튼을 눌러주세요.");
+      setError("데이터를 불러오지 못했습니다. 새로고침 버튼을 눌러주세요.");
     } finally {
       setLoading(false);
     }
@@ -62,6 +60,11 @@ const App: React.FC = () => {
   useEffect(() => {
     fetchDetailedComparison();
   }, [fetchDetailedComparison]);
+
+  const handleStartSimulation = () => {
+    // 외부 URL로 연결
+    window.open('https://ai-induction.vercel.app', '_blank');
+  };
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
@@ -133,7 +136,7 @@ const App: React.FC = () => {
                   { icon: <ShieldCheck size={18} />, title: "자율 조리", desc: "선제적 예측 및 자동 제어" }
                 ]}
                 actionText="시뮬레이션 시작"
-                onAction={() => setActiveTab('simulation')}
+                onAction={handleStartSimulation}
               />
             </div>
 
