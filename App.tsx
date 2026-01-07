@@ -13,9 +13,8 @@ import {
   Eye, 
   ShieldCheck, 
   AlertTriangle, 
-  ExternalLink,
-  Target,
-  Activity
+  Activity,
+  Target
 } from 'lucide-react';
 import { ComparisonCard } from './components/ComparisonCard';
 import { SimulationPanel } from './components/SimulationPanel';
@@ -40,7 +39,7 @@ const App: React.FC = () => {
           3. 정량적 지표: 온도 오차 1% 이내, 대응 속도 1초 이내, 조리 상태 인지 정확도 98% 이상.
           4. 독보적 편의성: 김치찌개/된장국 자동 조리 알고리즘 및 아침 예약 조리 기능.
           
-          반드시 마크다운 표(Table)를 사용하여 기술적 지표를 대조하고, 가독성 좋게 작성해줘.
+          반드시 마크다운 표(Table)를 사용하여 기술적 우위를 가독성 있게 작성해줘.
         `,
         config: { tools: [{ googleSearch: {} }] }
       });
@@ -56,7 +55,7 @@ const App: React.FC = () => {
   useEffect(() => { fetchDetailedComparison(); }, []);
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans tracking-tight text-gray-900">
+    <div className="min-h-screen bg-slate-50 font-sans tracking-tight text-gray-900 pb-20">
       <header className="bg-white/95 backdrop-blur-xl border-b sticky top-0 z-50 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
@@ -90,45 +89,40 @@ const App: React.FC = () => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         {activeTab === 'specs' ? (
-          <div className="space-y-16 animate-in fade-in slide-in-from-bottom-4 duration-700">
-            {/* 상단 퀵 카드 섹션 */}
+          <div className="space-y-16 animate-in fade-in duration-700">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               <ComparisonCard 
                 brand="SAMSUNG"
                 model="비스포크 AI 인피니트"
                 subModel="Indirect Sensing Model"
-                color="border-blue-500"
                 features={[
-                  { icon: <AlertTriangle className="text-amber-500" />, title: "장님 AI (Blind Sensing)", desc: "코일 온도 기반 추론으로 15% 이상 오차 발생" },
-                  { icon: <Smartphone />, title: "사후 반응형 제어", desc: "이벤트(넘침) 발생 후 대응하는 수동적 방식" }
+                  { icon: <AlertTriangle className="text-amber-500" />, title: "장님 AI (Blind Sensing)", desc: "열원 코일 온도 기반 간접 추론으로 15% 이상 심각한 온도 오차 발생" },
+                  { icon: <Smartphone />, title: "사후 대응 매커니즘", desc: "이미 넘친 후나 사고 발생 후에야 작동하는 수동적 제어" }
                 ]}
               />
               <ComparisonCard 
                 brand="LG ELECTRONICS"
                 model="디오스 오브제컬렉션"
                 subModel="Hardware Focused Model"
-                color="border-red-500"
                 features={[
-                  { icon: <Zap />, title: "물리적 고화력 특화", desc: "3.4kW 쿼드 인버터 등 하드웨어 출력에 집중" },
-                  { icon: <Target />, title: "고정 알고리즘", desc: "실시간 식재료 변화에 대응하지 못하는 고정 모델" }
+                  { icon: <Zap className="text-red-500" />, title: "물리적 출력 집중", desc: "3.4kW 쿼드 인버터 등 단순 화력 증대 및 하드웨어 성능에 치중" },
+                  { icon: <Target className="text-red-400" />, title: "정적 알고리즘", desc: "실시간 조리 환경 변화(식재료 상태)를 인지하지 못하는 한계" }
                 ]}
               />
               <ComparisonCard 
                 brand="ai-induction"
                 model="Autonomous Master"
-                subModel="Ground Truth Innovation"
-                color="border-emerald-500"
+                subModel="Ground Truth Technology"
                 highlight={true}
                 features={[
-                  { icon: <Eye />, title: "직접 온도 측정 (GT)", desc: "특허 기술 기반 오차 1% 미만의 정밀 센싱" },
-                  { icon: <ShieldCheck />, title: "선제적 예측 제어", desc: "1초 이내 대응으로 사고 발생 전 화력 자동 조절" }
+                  { icon: <Eye />, title: "직접 온도 측정 (GT)", desc: "특허 기술 기반 오차 1% 미만으로 음식의 실제 온도를 완벽 감지" },
+                  { icon: <ShieldCheck />, title: "예측형 선제 제어", desc: "1초 이내 지능형 대응으로 끓어넘침 및 화재를 원천 차단" }
                 ]}
                 actionText="작동 시뮬레이션"
                 onAction={() => window.open('https://ai-induction.vercel.app', '_blank')}
               />
             </div>
 
-            {/* AI 비교 대시보드 영역 */}
             <div className="bg-white rounded-[3.5rem] shadow-2xl shadow-indigo-100/40 overflow-hidden border border-gray-100">
               <div className="p-10 bg-gradient-to-br from-indigo-50/50 via-white to-emerald-50/30 flex items-center justify-between border-b border-gray-100">
                 <div className="flex items-center gap-5">
@@ -137,13 +131,13 @@ const App: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="text-2xl font-black text-gray-900 tracking-tight">2026 초격차 기술 분석 리포트</h3>
-                    <p className="text-xs text-gray-400 font-bold tracking-[0.2em] uppercase mt-1">Patent No. 10-2708883 Analytics</p>
+                    <p className="text-xs text-gray-400 font-bold tracking-[0.2em] uppercase mt-1">Patent Intelligence Analytics</p>
                   </div>
                 </div>
                 {loading && (
                   <div className="flex items-center gap-3 px-6 py-3 bg-indigo-50 text-indigo-600 rounded-2xl border border-indigo-100">
                     <Loader2 className="animate-spin w-5 h-5" />
-                    <span className="text-xs font-black uppercase tracking-widest">Mining Data...</span>
+                    <span className="text-xs font-black uppercase tracking-widest">Mining...</span>
                   </div>
                 )}
               </div>
@@ -152,10 +146,10 @@ const App: React.FC = () => {
                 {loading ? (
                   <div className="flex flex-col items-center justify-center py-40 space-y-8">
                     <div className="w-24 h-24 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin"></div>
-                    <p className="text-gray-900 font-black text-xl">데이터 정밀 분석 중...</p>
+                    <p className="text-gray-900 font-black text-xl">특허 기반 데이터 정밀 분석 중</p>
                   </div>
                 ) : (
-                  <div className="report-content prose prose-indigo max-w-none prose-table:rounded-3xl prose-table:shadow-sm overflow-x-auto">
+                  <div className="report-content prose prose-indigo max-w-none">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
                       {aiAnalysis || ""}
                     </ReactMarkdown>
@@ -164,7 +158,6 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* 사용자 경험 대조 섹션 */}
             <section className="grid grid-cols-1 md:grid-cols-2 gap-10">
               <div className="bg-white p-12 rounded-[3rem] border border-gray-100 shadow-xl">
                 <div className="flex items-center gap-5 mb-10">
@@ -173,11 +166,11 @@ const App: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="text-2xl font-black text-gray-900 tracking-tight">전통적 가전의 한계</h4>
-                    <p className="text-sm text-gray-400 font-bold uppercase tracking-wider">Indirect 추론 방식</p>
+                    <p className="text-sm text-gray-400 font-bold uppercase tracking-wider">Indirect 추론 패러다임</p>
                   </div>
                 </div>
                 <p className="leading-relaxed text-lg font-medium text-gray-600 mb-8">
-                  코일 온도를 재서 냄비 온도를 추측하는 <strong>'장님 방식'</strong>은 데이터 오염이 심각합니다. 끓어넘침이 발생한 <strong>후에야</strong> 화력을 낮추는 뒤늦은 대응이 최선입니다.
+                  현재의 AI 인덕션은 <strong>'장님'</strong>에 가깝습니다. 용기가 아닌 열원 코일의 온도를 재서 내용을 추측합니다. 이는 15% 이상의 오차를 유발하며, 사고가 <strong>난 후에야</strong> 반응하는 구조적 결함을 가집니다.
                 </p>
                 <div className="grid grid-cols-2 gap-6 pt-8 border-t border-gray-50">
                   <div className="text-center p-6 bg-gray-50 rounded-3xl">
@@ -185,13 +178,13 @@ const App: React.FC = () => {
                     <p className="text-2xl font-black text-gray-900">15% ~ 20%</p>
                   </div>
                   <div className="text-center p-6 bg-gray-50 rounded-3xl">
-                    <p className="text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">대응 방식</p>
-                    <p className="text-2xl font-black text-gray-900">사후 반응형</p>
+                    <p className="text-[10px] font-black text-gray-400 uppercase mb-2 tracking-widest">대응 속도</p>
+                    <p className="text-2xl font-black text-gray-900">5초 이상</p>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-indigo-900 p-12 rounded-[3rem] shadow-2xl relative overflow-hidden text-white group hover:shadow-indigo-400/20 transition-all">
+              <div className="bg-indigo-900 p-12 rounded-[3rem] shadow-2xl relative overflow-hidden text-white">
                 <div className="absolute top-0 right-0 p-12 opacity-10">
                   <Eye className="w-40 h-40" />
                 </div>
@@ -201,11 +194,11 @@ const App: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="text-2xl font-black tracking-tight">ai-induction의 혁신</h4>
-                    <p className="text-sm text-indigo-300 font-bold uppercase tracking-wider">Ground Truth 방식</p>
+                    <p className="text-sm text-indigo-300 font-bold uppercase tracking-wider">Ground Truth 패러다임</p>
                   </div>
                 </div>
                 <p className="leading-relaxed text-lg font-medium text-indigo-50/90 mb-8">
-                  용기 바닥의 온도를 직접 재는 <strong>'눈을 가진 AI'</strong>는 정확도가 98%에 달합니다. 끓기 시작하기 전, 넘칠 조짐이 보이기 전인 <strong>1초 이내</strong>에 화력을 자동 조절합니다.
+                  특허 기술로 인덕션에 <strong>'정확한 눈'</strong>을 달았습니다. 직접 접촉 센서로 <strong>음식의 실제 온도</strong>를 감지하며, Living Algorithm이 사고 징후를 예측하여 <strong>1초 이내</strong>에 선제적으로 제어합니다.
                 </p>
                 <div className="grid grid-cols-2 gap-6 pt-8 border-t border-indigo-800">
                   <div className="text-center p-6 bg-indigo-800/40 rounded-3xl backdrop-blur-md border border-indigo-700/50">
@@ -213,8 +206,8 @@ const App: React.FC = () => {
                     <p className="text-2xl font-black">1% 이내</p>
                   </div>
                   <div className="text-center p-6 bg-indigo-800/40 rounded-3xl backdrop-blur-md border border-indigo-700/50">
-                    <p className="text-[10px] font-black text-indigo-300 uppercase mb-2 tracking-widest">대응 방식</p>
-                    <p className="text-2xl font-black">예측 제어형</p>
+                    <p className="text-[10px] font-black text-indigo-300 uppercase mb-2 tracking-widest">대응 속도</p>
+                    <p className="text-2xl font-black">1초 이내</p>
                   </div>
                 </div>
               </div>
