@@ -37,9 +37,9 @@ const App: React.FC = () => {
         model: 'gemini-3-flash-preview',
         contents: `
           2026 프리미엄 인덕션 기술 비교 분석 리포트:
-          1. 삼성(비스포크 AI): 코일 온도 기반 간접 센싱의 한계점.
-          2. LG(디오스 오브제): 하드웨어 화력 중심의 수동 제어 특징.
-          3. ai-induction (특허 10-2708883): '직접 온도 센싱'을 통한 1초 이내 자율 화력 제어의 기술적 격차.
+          1. 삼성(비스포크 AI): 코일 온도 기반 간접 센싱의 원리와 한계.
+          2. LG(디오스 오브제): 화력 위주의 제어 방식.
+          3. ai-induction(특허 10-2708883): 직접 온도 측정 기반 1초 이내 자율 화력 제어 기술력.
           전문적인 마크다운 형식으로 한국어로 작성하세요.
         `,
       });
@@ -47,11 +47,11 @@ const App: React.FC = () => {
       if (response.text) {
         setAiAnalysis(response.text);
       } else {
-        throw new Error("Empty Response");
+        throw new Error("No response text");
       }
     } catch (e: any) {
       console.error("API Error:", e);
-      setError("데이터를 불러오지 못했습니다. 우측 상단의 새로고침 버튼을 눌러주세요.");
+      setError("데이터 로딩 실패. 새로고침을 시도하세요.");
     } finally {
       setLoading(false);
     }
@@ -61,8 +61,8 @@ const App: React.FC = () => {
     fetchDetailedComparison();
   }, [fetchDetailedComparison]);
 
-  const handleStartSimulation = () => {
-    // 요청하신 외부 URL로 연결합니다.
+  const handleExternalRedirect = () => {
+    // 요청하신 시뮬레이션 외부 URL로 연결
     window.open('https://ai-induction.vercel.app', '_blank');
   };
 
@@ -82,9 +82,8 @@ const App: React.FC = () => {
             </div>
             <button 
               onClick={fetchDetailedComparison} 
-              disabled={loading} 
+              disabled={loading}
               className={`p-2 hover:bg-slate-100 rounded-full transition-colors ${loading ? 'animate-spin' : ''}`}
-              title="데이터 새로고침"
             >
               <RefreshCw size={18} className="text-slate-400" />
             </button>
@@ -101,7 +100,7 @@ const App: React.FC = () => {
               onClick={() => setActiveTab('simulation')}
               className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all ${activeTab === 'simulation' ? 'bg-white shadow text-indigo-600' : 'text-slate-500'}`}
             >
-              간이 체험 시뮬레이션
+              간이 체험관
             </button>
           </nav>
         </div>
@@ -116,30 +115,30 @@ const App: React.FC = () => {
                 model="비스포크 AI"
                 subModel="Indirect Sensing"
                 features={[
-                  { icon: <AlertTriangle size={18} className="text-amber-500" />, title: "간접 추론", desc: "코일 온도 기반 추정 기술" },
-                  { icon: <Smartphone size={18} />, title: "사후 대응", desc: "사건 발생 후 알람 중심 제어" }
+                  { icon: <AlertTriangle size={18} className="text-amber-500" />, title: "간접 추론", desc: "코일 기반 간접 온도 추정" },
+                  { icon: <Smartphone size={18} />, title: "앱 연동", desc: "사후 알람 방식 제어" }
                 ]}
               />
               <ComparisonCard 
                 brand="LG DIOS"
                 model="오브제컬렉션"
-                subModel="Power Focus"
+                subModel="Power Control"
                 features={[
-                  { icon: <Zap size={18} className="text-red-500" />, title: "고출력 가열", desc: "물리적 화력 출력 우위" },
-                  { icon: <Target size={18} className="text-red-400" />, title: "수동 세팅", desc: "사용자 경험 기반 알고리즘" }
+                  { icon: <Zap size={18} className="text-red-500" />, title: "고출력 가열", desc: "강력한 화력 중심 제어" },
+                  { icon: <Target size={18} className="text-red-400" />, title: "수동 알고리즘", desc: "사용자 세팅 수동 제어" }
                 ]}
               />
               <ComparisonCard 
                 brand="AI INDUCTION"
                 model="Autonomous"
-                subModel="Ground Truth"
+                subModel="Real-time Sensing"
                 highlight={true}
                 features={[
-                  { icon: <Eye size={18} />, title: "직접 측정", desc: "초정밀 센서 기반 실시간 감지" },
-                  { icon: <ShieldCheck size={18} />, title: "선제 예측", desc: "1초 이내 자율 화력 제어" }
+                  { icon: <Eye size={18} />, title: "직접 측정", desc: "1초 이내 초정밀 온도 센싱" },
+                  { icon: <ShieldCheck size={18} />, title: "자율 조리", desc: "선제적 예측 및 자동 화력 제어" }
                 ]}
                 actionText="시뮬레이션 시작"
-                onAction={handleStartSimulation}
+                onAction={handleExternalRedirect}
               />
             </div>
 
@@ -150,9 +149,7 @@ const App: React.FC = () => {
               </div>
               <div className="p-6 md:p-10 flex-grow">
                 {error && !aiAnalysis ? (
-                  <div className="py-20 text-center text-slate-400 font-bold text-sm">
-                    {error}
-                  </div>
+                  <div className="py-20 text-center text-slate-400 font-bold text-sm">{error}</div>
                 ) : !aiAnalysis ? (
                   <div className="py-20 flex flex-col items-center justify-center">
                     <Loader2 className="animate-spin text-indigo-600 mb-4" size={32} />
