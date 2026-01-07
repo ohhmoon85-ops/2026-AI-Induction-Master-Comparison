@@ -1,5 +1,8 @@
 {
   "name": "2026 AI Induction Master Comparison",
   "description": "A premium comparison tool for top-tier induction cooktops from Samsung and LG, featuring AI-driven cooking simulations and detailed specification analysis.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
 }
