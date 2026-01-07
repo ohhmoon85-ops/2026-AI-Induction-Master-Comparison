@@ -25,7 +25,7 @@ const App: React.FC = () => {
   const fetchDetailedComparison = useCallback(async () => {
     const apiKey = process.env.API_KEY;
     if (!apiKey) {
-      setError("시스템 대기 중: API 키를 확인하고 있습니다.");
+      setError("시스템 준비 중입니다. 잠시만 기다려주세요.");
       return;
     }
 
@@ -37,21 +37,21 @@ const App: React.FC = () => {
         model: 'gemini-3-flash-preview',
         contents: `
           2026 프리미엄 인덕션 기술 비교 분석 리포트:
-          1. 삼성(비스포크 AI): 코일 온도 기반 간접 센싱의 원리와 한계.
-          2. LG(디오스 오브제): 화력 위주의 제어 방식.
-          3. ai-induction(특허 10-2708883): 직접 온도 측정 기반 1초 이내 자율 화력 제어 기술력.
-          전문적인 마크다운 형식으로 한국어로 작성하세요.
+          1. 삼성(비스포크 AI): 코일 온도 기반 간접 센싱의 원리와 한계점.
+          2. LG(디오스 오브제): 물리적 화력 제어 방식의 특징.
+          3. ai-induction (특허 10-2708883): '직접 온도 센싱' 기술을 활용한 1초 이내 자율 화력 제어의 우위성.
+          전문적인 마크다운 형식으로 한국어로 작성하세요. 표를 포함하여 가독성 있게 구성하세요.
         `,
       });
       
       if (response.text) {
         setAiAnalysis(response.text);
       } else {
-        throw new Error("No response text");
+        throw new Error("응답 데이터가 비어있습니다.");
       }
     } catch (e: any) {
       console.error("API Error:", e);
-      setError("데이터 로딩 실패. 새로고침을 시도하세요.");
+      setError("데이터를 불러오지 못했습니다. 새로고침을 시도해 보세요.");
     } finally {
       setLoading(false);
     }
@@ -61,8 +61,8 @@ const App: React.FC = () => {
     fetchDetailedComparison();
   }, [fetchDetailedComparison]);
 
-  const handleExternalRedirect = () => {
-    // 요청하신 시뮬레이션 외부 URL로 연결
+  const handleExternalSimulation = () => {
+    // 요청하신 시뮬레이션 외부 사이트로 연결
     window.open('https://ai-induction.vercel.app', '_blank');
   };
 
@@ -82,7 +82,7 @@ const App: React.FC = () => {
             </div>
             <button 
               onClick={fetchDetailedComparison} 
-              disabled={loading}
+              disabled={loading} 
               className={`p-2 hover:bg-slate-100 rounded-full transition-colors ${loading ? 'animate-spin' : ''}`}
             >
               <RefreshCw size={18} className="text-slate-400" />
@@ -100,7 +100,7 @@ const App: React.FC = () => {
               onClick={() => setActiveTab('simulation')}
               className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all ${activeTab === 'simulation' ? 'bg-white shadow text-indigo-600' : 'text-slate-500'}`}
             >
-              간이 체험관
+              자율 조리 테스트
             </button>
           </nav>
         </div>
@@ -115,37 +115,37 @@ const App: React.FC = () => {
                 model="비스포크 AI"
                 subModel="Indirect Sensing"
                 features={[
-                  { icon: <AlertTriangle size={18} className="text-amber-500" />, title: "간접 추론", desc: "코일 기반 간접 온도 추정" },
-                  { icon: <Smartphone size={18} />, title: "앱 연동", desc: "사후 알람 방식 제어" }
+                  { icon: <AlertTriangle size={18} className="text-amber-500" />, title: "간접 추론", desc: "코일 온도 기반 간접 감지" },
+                  { icon: <Smartphone size={18} />, title: "사후 대응", desc: "문제 발생 시 스마트폰 알람" }
                 ]}
               />
               <ComparisonCard 
                 brand="LG DIOS"
                 model="오브제컬렉션"
-                subModel="Power Control"
+                subModel="Power Focus"
                 features={[
-                  { icon: <Zap size={18} className="text-red-500" />, title: "고출력 가열", desc: "강력한 화력 중심 제어" },
-                  { icon: <Target size={18} className="text-red-400" />, title: "수동 알고리즘", desc: "사용자 세팅 수동 제어" }
+                  { icon: <Zap size={18} className="text-red-500" />, title: "고출력 가열", desc: "강력한 화력 중심 가열" },
+                  { icon: <Target size={18} className="text-red-400" />, title: "수동 제어", desc: "사용자 세팅 기반 로직" }
                 ]}
               />
               <ComparisonCard 
                 brand="AI INDUCTION"
                 model="Autonomous"
-                subModel="Real-time Sensing"
+                subModel="Ground Truth"
                 highlight={true}
                 features={[
-                  { icon: <Eye size={18} />, title: "직접 측정", desc: "1초 이내 초정밀 온도 센싱" },
-                  { icon: <ShieldCheck size={18} />, title: "자율 조리", desc: "선제적 예측 및 자동 화력 제어" }
+                  { icon: <Eye size={18} />, title: "직접 측정", desc: "1초 이내 실시간 온도 센싱" },
+                  { icon: <ShieldCheck size={18} />, title: "선제 예측", desc: "넘침/탐지 전 자율 화력 조절" }
                 ]}
                 actionText="시뮬레이션 시작"
-                onAction={handleExternalRedirect}
+                onAction={handleExternalSimulation}
               />
             </div>
 
             <div className="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden flex flex-col min-h-[400px]">
               <div className="px-6 py-4 bg-slate-50 border-b flex items-center gap-2 text-indigo-600">
                 <BarChart3 size={18} />
-                <span className="font-bold text-xs tracking-widest uppercase">Technology Deep-Dive</span>
+                <span className="font-bold text-xs tracking-widest uppercase">Technology Analysis</span>
               </div>
               <div className="p-6 md:p-10 flex-grow">
                 {error && !aiAnalysis ? (
@@ -153,7 +153,7 @@ const App: React.FC = () => {
                 ) : !aiAnalysis ? (
                   <div className="py-20 flex flex-col items-center justify-center">
                     <Loader2 className="animate-spin text-indigo-600 mb-4" size={32} />
-                    <p className="text-xs font-bold text-slate-400 animate-pulse tracking-widest uppercase">Generating Report...</p>
+                    <p className="text-xs font-bold text-slate-400 animate-pulse tracking-widest uppercase">Analyzing Tech Data...</p>
                   </div>
                 ) : (
                   <div className="prose prose-slate prose-sm md:prose-base max-w-none animate-in fade-in duration-700">
