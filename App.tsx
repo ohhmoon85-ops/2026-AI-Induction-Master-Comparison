@@ -51,7 +51,7 @@ const App: React.FC = () => {
       }
     } catch (e: any) {
       console.error("API Error:", e);
-      setError("데이터를 불러오지 못했습니다. 새로고침 버튼을 시도해 보세요.");
+      setError("데이터를 불러오지 못했습니다. 우측 상단의 새로고침 버튼을 눌러주세요.");
     } finally {
       setLoading(false);
     }
@@ -61,7 +61,8 @@ const App: React.FC = () => {
     fetchDetailedComparison();
   }, [fetchDetailedComparison]);
 
-  const handleExternalSimulation = () => {
+  const handleStartSimulation = () => {
+    // 요청하신 외부 URL로 연결합니다.
     window.open('https://ai-induction.vercel.app', '_blank');
   };
 
@@ -79,7 +80,12 @@ const App: React.FC = () => {
                 <p className="text-[9px] text-indigo-500 font-bold tracking-widest leading-none uppercase">Autonomous Lab</p>
               </div>
             </div>
-            <button onClick={fetchDetailedComparison} disabled={loading} className={`p-2 hover:bg-slate-100 rounded-full transition-colors ${loading ? 'animate-spin' : ''}`}>
+            <button 
+              onClick={fetchDetailedComparison} 
+              disabled={loading} 
+              className={`p-2 hover:bg-slate-100 rounded-full transition-colors ${loading ? 'animate-spin' : ''}`}
+              title="데이터 새로고침"
+            >
               <RefreshCw size={18} className="text-slate-400" />
             </button>
           </div>
@@ -95,7 +101,7 @@ const App: React.FC = () => {
               onClick={() => setActiveTab('simulation')}
               className={`flex-1 py-2.5 rounded-lg text-xs font-bold transition-all ${activeTab === 'simulation' ? 'bg-white shadow text-indigo-600' : 'text-slate-500'}`}
             >
-              자율 조리 시뮬레이션
+              간이 체험 시뮬레이션
             </button>
           </nav>
         </div>
@@ -111,7 +117,7 @@ const App: React.FC = () => {
                 subModel="Indirect Sensing"
                 features={[
                   { icon: <AlertTriangle size={18} className="text-amber-500" />, title: "간접 추론", desc: "코일 온도 기반 추정 기술" },
-                  { icon: <Smartphone size={18} />, title: "사후 대응", desc: "사건 발생 후 알림 알람" }
+                  { icon: <Smartphone size={18} />, title: "사후 대응", desc: "사건 발생 후 알람 중심 제어" }
                 ]}
               />
               <ComparisonCard 
@@ -120,7 +126,7 @@ const App: React.FC = () => {
                 subModel="Power Focus"
                 features={[
                   { icon: <Zap size={18} className="text-red-500" />, title: "고출력 가열", desc: "물리적 화력 출력 우위" },
-                  { icon: <Target size={18} className="text-red-400" />, title: "수동 세팅", desc: "사용자 경험 기반 로직" }
+                  { icon: <Target size={18} className="text-red-400" />, title: "수동 세팅", desc: "사용자 경험 기반 알고리즘" }
                 ]}
               />
               <ComparisonCard 
@@ -133,22 +139,24 @@ const App: React.FC = () => {
                   { icon: <ShieldCheck size={18} />, title: "선제 예측", desc: "1초 이내 자율 화력 제어" }
                 ]}
                 actionText="시뮬레이션 시작"
-                onAction={handleExternalSimulation}
+                onAction={handleStartSimulation}
               />
             </div>
 
             <div className="bg-white rounded-[2rem] shadow-sm border border-slate-200 overflow-hidden flex flex-col min-h-[400px]">
               <div className="px-6 py-4 bg-slate-50 border-b flex items-center gap-2 text-indigo-600">
                 <BarChart3 size={18} />
-                <span className="font-bold text-xs tracking-widest uppercase">Deep Tech Insight</span>
+                <span className="font-bold text-xs tracking-widest uppercase">Technology Deep-Dive</span>
               </div>
               <div className="p-6 md:p-10 flex-grow">
                 {error && !aiAnalysis ? (
-                  <div className="py-20 text-center text-slate-400 font-bold text-sm">{error}</div>
+                  <div className="py-20 text-center text-slate-400 font-bold text-sm">
+                    {error}
+                  </div>
                 ) : !aiAnalysis ? (
                   <div className="py-20 flex flex-col items-center justify-center">
                     <Loader2 className="animate-spin text-indigo-600 mb-4" size={32} />
-                    <p className="text-xs font-bold text-slate-400 animate-pulse tracking-widest uppercase">Analyzing Data...</p>
+                    <p className="text-xs font-bold text-slate-400 animate-pulse tracking-widest uppercase">Generating Report...</p>
                   </div>
                 ) : (
                   <div className="prose prose-slate prose-sm md:prose-base max-w-none animate-in fade-in duration-700">
