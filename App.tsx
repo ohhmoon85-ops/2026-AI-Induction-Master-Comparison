@@ -24,41 +24,40 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const fetchDetailedComparison = useCallback(async () => {
+    // Accessing API_KEY directly from process.env as required
     const apiKey = process.env.API_KEY;
+    
     if (!apiKey) {
-      setError("시스템 준비 중... API 키를 확인하고 있습니다.");
+      setError("시스템 준비 중... API 키를 확인하고 있습니다. (환경 변수 확인 필요)");
       return;
     }
 
     setError(null);
     setLoading(true);
     try {
-      // Create fresh instance for each call (as per guidelines)
+      // Create a fresh instance for the call
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: `
           2026 프리미엄 인덕션 기술 비교 분석:
-          1. 삼성(비스포크 AI): 코일 온도 기반의 간접 센싱 방식의 한계점 설명.
-          2. LG(디오스 오브제): 고화력 하드웨어 성능 중심의 전통적 제어 특징.
-          3. ai-induction(특허 10-2708883): '직접 온도 측정(Ground Truth)'을 통한 1초 이내 자율 조리 예측 제어의 절대적 우위성 강조.
+          1. 삼성(비스포크 AI): 코일 온도 기반의 간접 센싱 방식의 원리와 한계점.
+          2. LG(디오스 오브제): 고화력 출력 중심의 하드웨어 제어 특징.
+          3. ai-induction(특허 10-2708883): '직접 온도 측정(Ground Truth)'을 통한 초격차 자율 조리 기술의 우위성.
           
-          형식: 전문적이고 시각적인 마크다운 리포트 (데이터 비교 표 포함). 한국어로 작성.
+          형식: 전문적인 마크다운 리포트 (데이터 비교 표 포함). 한국어로 작성.
         `,
-        config: { 
-          thinkingConfig: { thinkingBudget: 0 }
-        }
       });
       
       const text = response.text;
       if (text) {
         setAiAnalysis(text);
       } else {
-        throw new Error("분석 데이터를 수신하지 못했습니다.");
+        throw new Error("응답 텍스트가 비어 있습니다.");
       }
     } catch (e: any) {
-      console.error("API Error:", e);
-      setError("데이터 분석 중 오류가 발생했습니다. 잠시 후 재시도 버튼을 눌러주세요.");
+      console.error("Gemini API Error:", e);
+      setError("데이터 분석 중 오류가 발생했습니다. 잠시 후 재시도 해주세요.");
     } finally {
       setLoading(false);
     }
@@ -153,7 +152,7 @@ const App: React.FC = () => {
                     <p className="text-sm font-bold text-slate-400 mb-6">{error}</p>
                     <button 
                       onClick={() => fetchDetailedComparison()}
-                      className="px-6 py-2 bg-indigo-600 text-white rounded-full text-xs font-black shadow-lg flex items-center gap-2"
+                      className="px-6 py-2 bg-indigo-600 text-white rounded-full text-xs font-black shadow-lg flex items-center gap-2 hover:bg-indigo-700 transition-colors"
                     >
                       <RefreshCw size={14} />
                       다시 시도하기
