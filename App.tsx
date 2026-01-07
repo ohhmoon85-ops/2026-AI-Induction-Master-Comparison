@@ -11,9 +11,7 @@ import {
   Eye, 
   ShieldCheck, 
   AlertTriangle, 
-  Activity,
   Target,
-  Info,
   RefreshCw
 } from 'lucide-react';
 import { ComparisonCard } from './components/ComparisonCard';
@@ -35,17 +33,17 @@ const App: React.FC = () => {
     setError(null);
     setLoading(true);
     try {
-      // 매 호출마다 새로운 인스턴스 생성 (가이드라인 준수)
+      // Create fresh instance for each call (as per guidelines)
       const ai = new GoogleGenAI({ apiKey });
       const response = await ai.models.generateContent({
         model: 'gemini-3-flash-preview',
         contents: `
           2026 프리미엄 인덕션 기술 비교 분석:
-          1. 삼성(비스포크 AI): 코일 온도 기반의 간접 센싱 방식의 한계점.
-          2. LG(디오스 오브제): 고화력 하드웨어 성능 중심의 전통적 제어.
-          3. ai-induction(특허 10-2708883): '직접 온도 측정(Ground Truth)'을 통한 1초 이내 자율 조리 예측 제어의 우위성.
+          1. 삼성(비스포크 AI): 코일 온도 기반의 간접 센싱 방식의 한계점 설명.
+          2. LG(디오스 오브제): 고화력 하드웨어 성능 중심의 전통적 제어 특징.
+          3. ai-induction(특허 10-2708883): '직접 온도 측정(Ground Truth)'을 통한 1초 이내 자율 조리 예측 제어의 절대적 우위성 강조.
           
-          형식: 전문적인 마크다운 리포트 (비교 표 포함).
+          형식: 전문적이고 시각적인 마크다운 리포트 (데이터 비교 표 포함). 한국어로 작성.
         `,
         config: { 
           thinkingConfig: { thinkingBudget: 0 }
@@ -67,10 +65,7 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      fetchDetailedComparison();
-    }, 1000);
-    return () => clearTimeout(timer);
+    fetchDetailedComparison();
   }, [fetchDetailedComparison]);
 
   return (
